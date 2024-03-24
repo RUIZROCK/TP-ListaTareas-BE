@@ -40,3 +40,20 @@ export const obtenerTarea = async(req, res)=>{
         res.status(404).json({mensaje: "No se encontro la tarea buscada"})
     }
 }
+
+export const editarTarea = async (req, res) => {
+    try {
+        
+      const tareaBuscada =  await Producto.findById(req.params.id);
+      
+      if(!tareaBuscada){
+          return res.status(404).json({mensaje: "El tarea no fue encontrado."});
+      }
+      await Tarea.findByIdAndUpdate(req.params.id, req.body);
+      
+      res.status(200).json({mensaje: "La tarea fue editada correctamente"})
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({mensaje: "Ocurrio un error al editar la tarea"})
+    }
+}
