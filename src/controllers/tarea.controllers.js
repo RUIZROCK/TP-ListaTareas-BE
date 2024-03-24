@@ -44,7 +44,7 @@ export const obtenerTarea = async(req, res)=>{
 export const editarTarea = async (req, res) => {
     try {
         
-      const tareaBuscada =  await Producto.findById(req.params.id);
+      const tareaBuscada =  await Tarea.findById(req.params.id);
       
       if(!tareaBuscada){
           return res.status(404).json({mensaje: "El tarea no fue encontrado."});
@@ -57,3 +57,18 @@ export const editarTarea = async (req, res) => {
       res.status(500).json({mensaje: "Ocurrio un error al editar la tarea"})
     }
 }
+
+export const borrarTarea = async (req, res) => {
+    try {
+      const tareaBuscada =  await Tarea.findById(req.params.id);
+      if(!tareaBuscada){
+          return res.status(404).json({mensaje: "La tarea no fue encontrado."});
+      }
+      await Tarea.findByIdAndDelete(req.params.id);
+
+      res.status(200).json({mensaje: "la tarea fue borrado correctamente"})
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({mensaje: "Ocurrio un error al borrar la tarea"})
+    }
+  }
