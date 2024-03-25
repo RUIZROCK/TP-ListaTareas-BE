@@ -19,7 +19,7 @@ export const listarTarea = async(req,res)=>{
     try {
         const listaTareas= await Tarea.find()
 
-        res.status(200).json("se obtuvo la lista de tareas")
+        res.status(200).json(listaTareas)
     } catch (error) {
         console.error(error)
         res.status(400).json({
