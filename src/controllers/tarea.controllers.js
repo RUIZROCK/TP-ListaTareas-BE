@@ -1,7 +1,16 @@
 import Tarea from "../database/models/tarea.js"
+import { validationResult } from "express-validator";
 
 export const crearTarea = async(req,res)=>{
     try {
+        const errores = validationResult(req)
+
+        if(!errores.isEmpty()){
+             return res.status(400).json({
+                errores: errores.array()
+            })    
+        }
+
         const tareaNew = new Tarea(req.body);
 
         await tareaNew.save()
